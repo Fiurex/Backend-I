@@ -16,15 +16,6 @@ app.get("/", (req, res) => {
     res.status(200).send('OK');
 });
 
-app.get("/Products", async (req,res)=>{
-    let products=await ProductManager.getProducts()
-    res.send(products)
-} )
-
-app.get("/Cart", async (req,res)=>{
-    let cart=await CartManager.get
-})
-
 const server=app.listen(PORT,()=>{
     console.log(`Server escuchando en puerto ${PORT}`);
 });
