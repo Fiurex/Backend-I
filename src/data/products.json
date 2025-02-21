@@ -1,0 +1,29 @@
+[
+    {
+      "id": 1,
+      "title": "Samsung Galaxy S24 ultra",
+      "description": "Un smartphone de última generación con pantalla OLED y cámara de 108MP.",
+      "code": "SPX2024",
+      "price": 799.99,
+      "status": true,
+      "stock": 50,
+      "category": "Electrónica",
+      "thumbnails": [
+        "../public/image/Samsung galaxy s24 ultra.webp"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Apple Iphone 16",
+      "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+      "code": "IPHONE16",
+      "price": 1299.99,
+      "status": true,
+      "stock": 30,
+      "category": "Electrónica",
+      "thumbnails": [
+        "../public/image/Apple iPhone 16.webp"
+      ]
+    }
+  ]
+  
