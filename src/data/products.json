@@ -1,29 +1,165 @@
 [
-    {
-      "id": 1,
-      "title": "Samsung Galaxy S24 ultra",
-      "description": "Un smartphone de última generación con pantalla OLED y cámara de 108MP.",
-      "code": "SPX2024",
-      "price": 799.99,
-      "status": true,
-      "stock": 50,
-      "category": "Electrónica",
-      "thumbnails": [
-        "../public/image/Samsung galaxy s24 ultra.webp"
-      ]
-    },
-    {
-      "id": 2,
-      "title": "Apple Iphone 16",
-      "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
-      "code": "IPHONE16",
-      "price": 1299.99,
-      "status": true,
-      "stock": 30,
-      "category": "Electrónica",
-      "thumbnails": [
-        "../public/image/Apple iPhone 16.webp"
-      ]
-    }
-  ]
-  
+  {
+    "id": 1,
+    "title": "Samsung",
+    "description": "Un smartphone de última generación con pantalla OLED y cámara de 108MP.",
+    "code": "SPX2024",
+    "price": 799.99,
+    "status": true,
+    "stock": 50,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Samsung galaxy s24 ultra.webp"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Apple Iphone 16",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "IPHONE16",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 4,
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 5,
+    "title": "Xiaomi lala",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 6,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 7,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 8,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 9,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 10,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": -123,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": -123,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "Xiaomi lala",
+    "description": "Smartphone con procesador de última generación, camara de alta resolucion y batería de larga duración.",
+    "code": "XIAOMI",
+    "price": 1299.99,
+    "status": true,
+    "stock": 30,
+    "category": "Electrónica",
+    "thumbnails": [
+      "../public/image/Apple iPhone 16.webp"
+    ]
+  }
+]

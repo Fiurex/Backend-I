@@ -1,5 +1,5 @@
 const fs = require("fs");
-const path = "./src/data/carts.json";
+const path = "./src/data/cart.json";
 
 class CartManager {
     constructor() {
