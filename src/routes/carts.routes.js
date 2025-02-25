@@ -16,7 +16,6 @@ router.get("/:cid", (req, res) => {
 
 router.post("/:cid/product/:pid", async (req, res) => {
     try {
-        // Extraer los parámetros y validarlos
         const cid = parseInt(req.params.cid);
         const pid = parseInt(req.params.pid);
         if (isNaN(cid) || isNaN(pid)) {
