@@ -47,8 +47,10 @@ class ProductManager {
     }
 
     async deleteProduct(id) {
-        this.products = this.products.filter((p) => p.id !== id);
+        const aux=this.products.filter((p) => p.id !== id)
+        this.products = this.products.filter((p) => String(p.id) !== String(id));
         await this.saveProducts();
+        
     }
 }
 module.exports = ProductManager;
