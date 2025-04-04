@@ -48,7 +48,7 @@ class CartManagerMongoo {
     return await cart.populate("products.product");
   }
 
-  // ✅ Renombrado para coincidir con el router
+  
   async removeProductFromCart(cid, pid) {
     const cart = await this.model.findById(cid);
     if (!cart) throw new Error("Carrito no encontrado");

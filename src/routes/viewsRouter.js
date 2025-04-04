@@ -8,7 +8,7 @@ const router = Router();
 const productManager = new ProductManagerMongoo();
 const cartManager = new CartManagerMongoo();
 
-// ✅ Vista principal con productos paginados
+// Vista principal con productos paginados
 router.get('/products', async (req, res) => {
   try {
     const { page = 1, limit = 10, sort = "asc", query = "" } = req.query;
@@ -21,7 +21,7 @@ router.get('/products', async (req, res) => {
     });
 
     res.render('home', {
-      products: result.payload, // <-- ¡ESTA es la clave!
+      products: result.payload, 
       page: result.page,
       totalPages: result.totalPages,
       total: result.total,
@@ -55,7 +55,7 @@ router.get('/products/:pid', async (req, res) => {
   }
 });
 
-// ✅ Vista para listar todos los carritos disponibles
+// Lista carritos disponibles
 router.get('/carts', async (req, res) => {
   try {
     const carts = await cartManager.getAllCarts();
@@ -65,17 +65,17 @@ router.get('/carts', async (req, res) => {
   }
 });
 
-// ✅ Vista renderizada de un carrito específico usando Handlebars
+// Vista renderizada de un carrito específico usando Handlebars
 router.get('/carts/view/:cid', async (req, res) => {
   try {
     const { cid } = req.params;
     const cart = await cartManager.getCartById(cid);
 
-    if (!cart) return res.status(404).send('❌ Carrito no encontrado');
+    if (!cart) return res.status(404).send(' Carrito no encontrado');
 
     
 
-    // Aseguramos que el populate funcionó (y que no hay productos nulos)
+    
     const validProducts = cart.products.filter(p => p.product);
     cart.products = validProducts;
 
@@ -87,7 +87,7 @@ router.get('/carts/view/:cid', async (req, res) => {
 });
 
 
-// ✅ Agregar producto al carrito (redireccionando a la vista)
+// Agregar producto al carrito (redireccionando a la vista)
 router.post('/carts/:cid/products/:pid', async (req, res) => {
   try {
     const { cid, pid } = req.params;
