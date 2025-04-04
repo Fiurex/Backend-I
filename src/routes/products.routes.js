@@ -1,21 +1,79 @@
 const express = require("express");
-const ProductManager = require("../dao/ProductManager");
+const mongoose = require("mongoose");
+//const ProductManager = require("../dao/ProductManager");
+const ProductManagerMongoo = require("../dao/ProductManagerMongoo.js");
 
-const productManager = new ProductManager();
+const productManager = new ProductManagerMongoo();
+
 
 const Router=require('express').Router;
 const router=Router();
+router.get('/', async (req, res) => {
+    try {
+      const { limit = 10, page = 1, sort, query } = req.query;
+      const hasParams = limit !== "10" || page !== "1" || sort || query;
+  
+      if (!hasParams) {
+        const productos = await productManager.get();
+        return res.status(200).json({ status: 'success', payload: productos });
+      }
+  
+      const data = await productManager.getPaginatedProducts({
+        limit: parseInt(limit),
+        page: parseInt(page),
+        sort,
+        query: query ? { category: query } : {}
+      });
+  
+      const baseUrl = `${req.protocol}://${req.get('host')}${req.baseUrl}`;
+      
+      const prevLink = data.hasPrevPage ? `${baseUrl}?page=${data.prevPage}&limit=${limit}${sort ? `&sort=${sort}` : ''}${query ? `&query=${query}` : ''}` : null;
+      const nextLink = data.hasNextPage ? `${baseUrl}?page=${data.nextPage}&limit=${limit}${sort ? `&sort=${sort}` : ''}${query ? `&query=${query}` : ''}` : null;
+  
+      res.status(200).json({
+        status: 'success',
+        payload: data.products,
+        totalPages: data.totalPages,
+        prevPage: data.prevPage,
+        nextPage: data.nextPage,
+        page: data.page,
+        hasPrevPage: data.hasPrevPage,
+        hasNextPage: data.hasNextPage,
+        prevLink,
+        nextLink
+      });
+  
+    } catch (error) {
+      console.error('Error al obtener productos:', error);
+      res.status(500).json({ status: 'error', message: 'Error interno del servidor' });
+    }
+  });
+  
+  
 
+router.get("/:pid", async (req, res) => {
+    try {
+        const pid = req.params.pid;
 
+        // Validar que el ID es un ObjectId de MongoDB
+        if (!mongoose.Types.ObjectId.isValid(pid)) {
+            return res.status(400).json({ error: "ID no válido" });
+        }
 
-router.get("/", (req, res) => {
-    res.json(productManager.getAll());
+        // Buscar el producto
+        const product = await productManager.getById({_id:pid});
+
+        if (!product) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+
+        return res.json(product);
+    } catch (error) {
+        console.error("Error al obtener el producto:", error);
+        res.status(500).json({ error: "Error al obtener el producto" });
+    }
 });
 
-router.get("/:pid", (req, res) => {
-    const product = productManager.getById(parseInt(req.params.pid));
-    product ? res.json(product) : res.status(404).json({ error: "Producto no encontrado" });
-});
 
 router.post("/", async (req, res) => {
      if (
@@ -63,21 +121,32 @@ router.post("/", async (req, res) => {
         return res.status(400).json({ error: "Ingresar solo letras y espacios." });
     }
 
-    if (
-        !Array.isArray(req.body.thumbnails) || 
-        req.body.thumbnails.length === 0 || 
-        !req.body.thumbnails.every(item => typeof item === "string" && item.trim() !== "")
-    ) {
-        return res.status(400).json({ error: "Ingrese rutas válidas." });
-    }
+       
+        if (typeof thumbnails === "string" && thumbnails.trim() === "") {
+            req.body.thumbnails = [];
+        }
+
+       
+        if (
+            !Array.isArray(req.body.thumbnails) || 
+            req.body.thumbnails.some(item => typeof item !== "string" || item.trim() === "")
+        ) {
+            return res.status(400).json({ error: "Ingrese rutas válidas." });
+        }
+
+        //  Si no se envían imágenes, asignar una por defecto
+        if (req.body.thumbnails.length === 0) {
+            req.body.thumbnails = ["https://via.placeholder.com/150"];
+        }
+
     
 
     
-    const product = await productManager.addProduct(req.body);
+        const product = await productManager.addProduct(req.body);
     res.json(product);
 });
 
-router.put("/:pid", async (req, res) => {
+/*router.put("/:pid", async (req, res) => {
     const productid = parseInt(req.params.pid)
     if (
         req.body.id && req.body.id !== productid
@@ -87,10 +156,32 @@ router.put("/:pid", async (req, res) => {
     
     const updatedProduct = await productManager.updateProduct(parseInt(req.params.pid), req.body);
     updatedProduct ? res.json(updatedProduct) : res.status(404).json({ error: "Producto no encontrado" });
+});*/
+
+router.put("/:pid", async (req, res) => {
+    try {
+        const pid = req.params.pid;
+
+        if (!mongoose.Types.ObjectId.isValid(pid)) {
+            return res.status(400).json({ error: "ID no válido" });
+        }
+
+        const updatedProduct = await productManager.update(pid, req.body);
+
+        if (!updatedProduct) {
+            return res.status(404).json({ error: "Producto no encontrado" });
+        }
+
+        res.json(updatedProduct);
+    } catch (error) {
+        console.error("Error al actualizar producto:", error);
+        res.status(500).json({ error: "Error al actualizar producto" });
+    }
 });
 
+
 router.delete("/:pid", async (req, res) => {
-    await productManager.deleteProduct(parseInt(req.params.pid));
+    await productManager.delete(req.params.pid);
     res.json({ message: "Producto eliminado" });
 });
 

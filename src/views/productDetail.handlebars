@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{product.title}}</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+    }
+
+    header {
+      background-color: #0077cc;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #ffffff;
+      color: #0077cc;
+      border: 2px solid #0077cc;
+      border-radius: 5px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      background-color: #0077cc;
+      color: white;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-detail {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .product-image-container {
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .product-image {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+
+    .product-info {
+      flex: 2;
+      min-width: 300px;
+    }
+
+    .product-info h2 {
+      margin-top: 0;
+    }
+
+    form {
+      margin-top: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input[type="number"] {
+      padding: 5px;
+      width: 60px;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px 15px;
+      background-color: #0077cc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #0077cc;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Detalles del Producto</h1>
+    <a href="/products" class="btn">⬅️ Volver a Productos</a>
+  </header>
+
+  <main class="container">
+    <section class="product-detail">
+      <div class="product-image-container">
+        <img src="{{product.thumbnail}}" alt="{{product.title}}" class="product-image">
+      </div>
+      <div class="product-info">
+        <h2>{{product.title}}</h2>
+        <p><strong>Descripción:</strong> {{product.description}}</p>
+        <p><strong>Precio:</strong> ${{product.price}}</p>
+        <p><strong>Stock disponible:</strong> {{product.stock}}</p>
+        <p><strong>Categoría:</strong> {{product.category}}</p>
+
+        <form id="addToCartForm">
+          <label for="quantity">Cantidad:</label>
+          <input type="number" id="quantity" name="quantity" min="1" value="1">
+          <button type="submit">🛒 Agregar al carrito</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      let cartId = localStorage.getItem("cartId");
+
+      if (!cartId) {
+        try {
+          const response = await fetch("/api/carts", { method: "POST" });
+          const data = await response.json();
+          cartId = data.cart._id;
+          localStorage.setItem("cartId", cartId);
+        } catch (error) {
+          console.error("Error al crear carrito:", error);
+          return;
+        }
+      }
+
+      document.getElementById("addToCartForm").addEventListener("submit", async (event) => {
+        event.preventDefault();
+
+        const quantity = document.getElementById("quantity").value;
+        const productId = "{{product._id}}";
+
+        const response = await fetch(`/api/carts/${cartId}/product/${productId}`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ quantity: Number(quantity) })
+        });
+
+        const result = await response.json();
+        if (response.ok) {
+          alert("✅ Producto agregado al carrito con éxito");
+        } else {
+          alert("⚠️ Error al agregar producto: " + result.error);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
+

@@ -1,0 +1,63 @@
+<div class="container">
+  <h1>🛒 Lista de Carritos Disponibles</h1>
+
+  {{#if carts.length}}
+    <div class="grid">
+      {{#each carts}}
+        <div class="card">
+          <h3>🧺 Carrito ID:</h3>
+          <p><strong>{{this._id}}</strong></p>
+          <p><strong>Productos:</strong> {{this.products.length}}</p>
+          <a href="/carts/view/{{this._id}}" class="btn btn-primary">Ver Carrito</a>
+        </div>
+      {{/each}}
+    </div>
+  {{else}}
+    <p class="empty-cart">No hay carritos disponibles.</p>
+  {{/if}}
+</div>
+
+<style>
+  .container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .card {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 15px;
+    background: #f9f9f9;
+    box-shadow: 0 0 8px rgba(0,0,0,0.05);
+    text-align: center;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #1e88e5;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background 0.3s ease;
+  }
+
+  .btn:hover {
+    background: #1565c0;
+  }
+
+  .empty-cart {
+    margin-top: 30px;
+    font-size: 1.2em;
+    color: #888;
+    text-align: center;
+  }
+</style>

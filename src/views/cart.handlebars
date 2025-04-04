@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Carrito</title>
+</head>
+<body>
+  <div style="padding: 20px; max-width: 1200px; margin: auto; font-family: 'Segoe UI', sans-serif;">
+    <h1>🧺 Carrito ID: {{cid}}</h1>
+
+    {{#if cart.products.length}}
+      <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+        {{#each cart.products}}
+          <div style="border: 1px solid #ccc; border-radius: 10px; padding: 15px; background: #fdfdfd; box-shadow: 0 0 10px rgba(0,0,0,0.05); position: relative;">
+            <button 
+              onclick="eliminarDelCarrito('{{../cid}}', '{{this.product._id}}')" 
+              style="position: absolute; top: 10px; right: 10px; background: transparent; border: none; color: #c00; font-size: 18px; cursor: pointer;">
+              ❌
+            </button>
+            <h3>{{this.product.title}}</h3>
+            <p><strong>Descripción:</strong> {{this.product.description}}</p>
+            <p><strong>Precio:</strong> ${{this.product.price}}</p>
+            <p><strong>Cantidad:</strong> {{this.quantity}}</p>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <p style="text-align: center; font-size: 18px; font-weight: bold; color: #555;">Este carrito no tiene productos aún.</p>
+    {{/if}}
+
+    <div style="display: flex; justify-content: space-between; margin-top: 20px;">
+      <a href="/carts" style="padding: 10px 15px; background: #0077cc; color: #fff; border-radius: 5px; text-decoration: none;">📋 Ver todos los carritos</a>
+      <a href="/products" style="padding: 10px 15px; background: #0077cc; color: #fff; border-radius: 5px; text-decoration: none;">🛒 Ver productos</a>
+    </div>
+  </div>
+
+  <script>
+    async function eliminarDelCarrito(cid, pid) {
+      if (!confirm('¿Estás seguro de eliminar este producto del carrito?')) return;
+
+      try {
+        const res = await fetch(`/api/carts/${cid}/products/${pid}`, {
+          method: 'DELETE',
+        });
+
+        if (res.ok) {
+          location.reload();
+        } else {
+          const data = await res.json();
+          alert('Error al eliminar el producto: ' + (data.error || 'desconocido'));
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('Ocurrió un error al eliminar el producto.');
+      }
+    }
+  </script>
+</body>
+</html>
